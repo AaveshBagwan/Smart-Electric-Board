@@ -64,6 +64,11 @@ BLYNK_CONNECTED(){
 
 BLYNK_DISCONNECTED() {
   Serial.println("Disconnected from Blynk server");
+   // Ensure relay is ON initially
+  digitalWrite(RELAY_PIN_D1, HIGH); 
+  digitalWrite(RELAY_PIN_D2, HIGH); 
+  digitalWrite(RELAY_PIN_D5, HIGH); 
+  Serial.println("Sets relay pins as high......");
 }
 
 BLYNK_WRITE(V0) { // V0 corresponds to the Switch1 button widget in the app
@@ -118,15 +123,21 @@ void setup()
   Serial.begin(115200);
   delay(100);
 
+  if(!setDigitalAndVirutalPinFlag){
+    setDigitalAndVirutalPinFlag=true;
+  }
+
   // Set the relay pin as output
   pinMode(RELAY_PIN_D1, OUTPUT);
   pinMode(RELAY_PIN_D2, OUTPUT);
   pinMode(RELAY_PIN_D5, OUTPUT);
   Serial.println("Sets relay pins as output......");
 
-  if(!setDigitalAndVirutalPinFlag){
-    setDigitalAndVirutalPinFlag=true;
-  }
+  // Ensure relay is ON initially
+  digitalWrite(RELAY_PIN_D1, HIGH); 
+  digitalWrite(RELAY_PIN_D2, HIGH); 
+  digitalWrite(RELAY_PIN_D5, HIGH); 
+  Serial.println("Sets relay pins as high......");
 
   BlynkEdgent.begin();
   Serial.println("Setup function ends......");
